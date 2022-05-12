@@ -8,10 +8,13 @@
     "serve": "nuxi preview"
   },
   "dependencies": {
+    "dayjs": "^1.11.2",
+    "deta": "^1.1.0",
     "pinia": "^2.0.13"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.20.6",
+    "@faker-js/faker": "^6.3.1",
     "@henrycunh/ev": "^0.4.1",
     "@iconify-json/carbon": "^1.1.3",
     "@iconify-json/ri": "^1.1.1",

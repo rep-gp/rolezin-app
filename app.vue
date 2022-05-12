@@ -1,11 +1,6 @@
 <script setup>
 useHead({
-    title: 'Nuxtase',
-    link: [
-        {
-            rel: 'icon', type: 'image/png', href: '/nuxt.png',
-        },
-    ],
+    title: 'rolêzin 🍻',
 })
 </script>
 

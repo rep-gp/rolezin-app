@@ -7,7 +7,7 @@ export default defineNuxtConfig({
         '@unocss/nuxt',
         '@pinia/nuxt',
         '@nuxtjs/color-mode',
-        '@nuxtjs/supabase',
+        // '@nuxtjs/supabase',
     ],
     experimental: {
         reactivityTransform: true,
@@ -21,6 +21,9 @@ export default defineNuxtConfig({
         preflight: true,
         icons: {
             scale: 1.2,
+        },
+        shortcuts: {
+            bordered: 'b-1 b-coolgray-200 dark:b-dark-200',
         },
         webFonts: {
             provider: 'google',
