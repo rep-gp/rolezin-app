@@ -5,12 +5,16 @@ const onClick = () => emit('click')
 
 <template>
     <button
-        text="3.5 white"
+        text="3.5 warmgray-800"
+        dark:text-warmgray-200
         font-bold
-        bg="#FE4C4C hover:#F42A2A"
-        rounded p="x-6 y-2.5" rounded-2 shadow="lg red-200 dark:red-900 active:none"
+        class="dark:bg-warmgray-800 dark:hover:bg-warmgray-700"
+        bg-warmgray-100
+        rounded p="x-6 y-2.5" rounded-2
+        b-1 b-warmgray-200 dark:b-warmgray-700
+        shadow-md shadow-warmgray-100 dark:shadow-warmgray-900 active:none
         transition
-        flex
+        flex justify-center
         items-center
         @click="onClick"
     >

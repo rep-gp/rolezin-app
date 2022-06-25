@@ -21,4 +21,8 @@ html.dark {
     background: #222;
     color: white;
 }
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
 </style>

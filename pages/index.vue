@@ -1,38 +1,40 @@
 <script lang="ts" setup>
-import { usePartyStore } from '~/store/parties'
+import dayjs from 'dayjs'
+import type { Party } from '~~/types/party'
 
-const { parties: partyList, addParty } = usePartyStore()
-const days = computed(() => new Array(15)
-    .fill(0)
-    .map((_, i) =>
-        new Date(new Date().getTime() + i * 24 * 60 * 60 * 1000),
-    ))
+const { listParties } = usePartyStore()
+const { data: parties } = await listParties()
 
-onMounted(() => {
-    if (partyList.length === 0)
-        days.value.forEach(day => addParty(day.toISOString()))
-})
+const days = computed(() => {
+    if (!parties.value)
+        return []
 
-const getParties = (day: Date) => {
-    return partyList.filter((party) => {
-        const partyDate = new Date(party.date)
-        return partyDate.getFullYear() === day.getFullYear()
-            && partyDate.getMonth() === day.getMonth()
-            && partyDate.getDate() === day.getDate()
+    // Group parties by day
+    const days = parties.value.reduce((acc, party) => {
+        const day = party.date.split('T')[0]
+        if (!acc[day])
+            acc[day] = []
+
+        acc[day].push(party)
+        return acc
+    }, {} as Record<string, Party[]>)
+    return Object.entries(days).sort((a, b) => {
+        const aDate = dayjs(a[0])
+        const bDate = dayjs(b[0])
+        return aDate.isAfter(bDate) ? 1 : -1
     })
-}
-
-const parties = computed(() => partyList)
-
+})
 </script>
 
 <template>
     <div pb-24>
-        <Day
-            v-for="day in days" :key="day.getDate()" :date="day"
-            :parties="getParties(day)"
-            mb-4
-        />
-        {{ partyList.length }}
+        <div>
+            <Day
+                v-for="[day, partyList] in days" :key="day"
+                :date="day"
+                :parties="partyList"
+                mb-4
+            />
+        </div>
     </div>
 </template>

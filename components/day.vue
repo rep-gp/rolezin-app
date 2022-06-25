@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import type { Party } from '~/store/parties'
 
 const props = defineProps<{
-    date: Date
+    date: string
     parties: Party[]
 }>()
 
