@@ -6,10 +6,12 @@
     <main
         font-sans py-4 px-10 text-center
         max-w-400px mx-auto
-        relative
+        relative flex flex-col min-h-full
     >
-        <AppNavbar />
-        <slot />
+        <AppNavbar w-full />
+        <div grow>
+            <slot />
+        </div>
         <AppFooter />
     </main>
 </template>

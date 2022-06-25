@@ -1,4 +1,9 @@
 import { defineNuxtConfig } from 'nuxt'
+import load from '@henrycunh/ev'
+import { shortcuts } from './style/shortcuts'
+
+for (const [key, value] of Object.entries(load()))
+    process.env[key] = value
 
 export default defineNuxtConfig({
     modules: [
@@ -22,9 +27,7 @@ export default defineNuxtConfig({
         icons: {
             scale: 1.2,
         },
-        shortcuts: {
-            bordered: 'b-1 b-coolgray-200 dark:b-dark-200',
-        },
+        shortcuts,
         webFonts: {
             provider: 'google',
             fonts: {
@@ -34,5 +37,10 @@ export default defineNuxtConfig({
     },
     colorMode: {
         classSuffix: '',
+    },
+    runtimeConfig: {
+        public: {
+            baseURL: process.env.API_URL,
+        },
     },
 })
