@@ -12,7 +12,7 @@ export default defineNuxtConfig({
         '@unocss/nuxt',
         '@pinia/nuxt',
         '@nuxtjs/color-mode',
-        // '@nuxtjs/supabase',
+        '@kevinmarrec/nuxt-pwa',
     ],
     experimental: {
         reactivityTransform: true,
@@ -41,6 +41,25 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             baseURL: process.env.API_URL,
+        },
+    },
+    pwa: {
+        icon: {
+            source: './public/icon.png',
+        },
+        manifest: {
+            background_color: '#ffffff',
+            description: 'na busca de um rolê? chega ae',
+            name: 'rolezin',
+            short_name: 'rolezin',
+            theme_color: '#f97316',
+        },
+        meta: {
+            description: 'na busca de um rolê? chega ae',
+            lang: 'pt-BR',
+            name: 'rolezin',
+            ogDescription: 'na busca de um rolê? chega ae',
+            ogUrl: 'https://rolez.in',
         },
     },
 })
