@@ -1,0 +1,46 @@
+name: Deploy preview environment
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  release:
+    name: Push application to Vercel
+    runs-on: ubuntu-latest
+    steps:
+      - id: script
+        uses: actions/github-script@v3
+        with:
+          script: |
+            const isPr = [ 'pull_request', 'pull_request_target' ].includes(context.eventName)
+            core.setOutput('ref', isPr ? context.payload.pull_request.head.ref : context.ref)
+            core.setOutput('repo', isPr ? context.payload.pull_request.head.repo.full_name : context.repo.full_name)
+            core.setOutput('pr-number', context.payload.pull_request.number)
+            core.setOutput('repo-name', context.payload.pull_request.head.repo.full_name.split('/')[1])
+      - name: Get Token
+        id: auth
+        uses: peter-murray/workflow-application-token-action@v1
+        with:
+          application_id: ${{ secrets.APPLICATION_ID }}
+          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+      - name: Checkout
+        uses: actions/checkout@v3
+        with: 
+          fetch-depth: 0
+          ref: ${{ steps.script.outputs.ref }}
+          repository: ${{ steps.script.outputs.repo }}
+      - name: Deploy to Vercel
+        id: deploy
+        uses: BetaHuhn/deploy-to-vercel-action@ffcc89a6d79de43d964945ce053395c2958610b1
+        env:
+          DOMAIN: rolezin-app-${{ steps.script.outputs.pr-number }}.vercel.app
+        with:
+          GITHUB_TOKEN: ${{ steps.auth.outputs.token }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          PR_PREVIEW_DOMAIN: ${{ env.DOMAIN }}
+          BUILD_ENV: |
+            EV_SECRET=${{ secrets.EV_SECRET }}
+            REDIRECT_URL=${{ env.DOMAIN }}
