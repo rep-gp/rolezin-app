@@ -42,4 +42,5 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           PR_PREVIEW_DOMAIN: ${{ env.DOMAIN }}
           BUILD_ENV: |
+            EV_SECRET=${{ secrets.EV_SECRET }}
             REDIRECT_URL=${{ env.DOMAIN }}
